@@ -38,30 +38,23 @@ public class CommodityResource {
     public Response getAllCommodities(){
         try {
             List<Object> commodities = new ArrayList<>();
-            List dishes = dishesRepository.findAllDishes();
-            for(int i = 0; i < dishes.size(); i++)
-                commodities.add(dishes.get(i));
             List shoes = shoesRepository.findAllShoes();
-            for(int i = 0; i < shoes.size(); i++)
-                commodities.add(shoes.get(i));
+            commodities.add(shoes);
             List clothes = clothesRepository.findAllClothes();
-            for(int i = 0; i < clothes.size(); i++)
-                commodities.add(clothes.get(i));
-            List backpacks = backpackRepository.findAllBackpacks();
-            for(int i = 0; i < backpacks.size(); i++)
-                commodities.add(backpacks.get(i));
-            List equipment = equipmentRepository.findAllEquipment();
-            for(int i = 0; i < equipment.size(); i++)
-                commodities.add(equipment.get(i));
-            List food = foodRepository.findAllFood();
-            for(int i = 0; i < food.size(); i++)
-                commodities.add(food.get(i));
-            List sleepingBags = sleepingBagRepository.findAllSleepingBags();
-            for(int i = 0; i < sleepingBags.size(); i++)
-                commodities.add(sleepingBags.get(i));
+            commodities.add(clothes);
             List tents = tentRepository.findAllTents();
-            for(int i = 0; i < tents.size(); i++)
-                commodities.add(tents.get(i));
+            commodities.add(tents);
+            List sleepingBags = sleepingBagRepository.findAllSleepingBags();
+            commodities.add(sleepingBags);
+            List dishes = dishesRepository.findAllDishes();
+            commodities.add(dishes);
+            List food = foodRepository.findAllFood();
+            commodities.add(food);
+            List backpacks = backpackRepository.findAllBackpacks();
+            commodities.add(backpacks);
+            List equipment = equipmentRepository.findAllEquipment();
+            commodities.add(equipment);
+
                 return crud.options()
                         .entity(commodities)
                         .build();
