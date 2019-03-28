@@ -10,7 +10,7 @@ public class SleepingBag extends Commodity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "sleeping_bag_id")
-    private Long sleepingBagId;
+    private Long id;
 
     @Column(name = "material")
     private String material;
@@ -18,12 +18,12 @@ public class SleepingBag extends Commodity {
     @Column(name = "size")
     private String size;
 
-    public Long getSleepingBagId() {
-        return sleepingBagId;
+    public Long getId() {
+        return id;
     }
 
-    public void setSleepingBagId(Long sleepingBagId) {
-        this.sleepingBagId = sleepingBagId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getMaterial() {
