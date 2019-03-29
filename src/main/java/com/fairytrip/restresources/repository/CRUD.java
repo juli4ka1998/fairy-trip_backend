@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.ws.rs.core.Response;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,5 +190,25 @@ public class CRUD {
               .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
     }
 
+    public void writeToFile(InputStream uploadedInputStream,
+                            String uploadedFileLocation) {
+
+        try {
+            OutputStream out = new FileOutputStream(new File(
+                    uploadedFileLocation));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            out = new FileOutputStream(new File(uploadedFileLocation));
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //System.out.println("ll");
+        }
+    }
 
 }
