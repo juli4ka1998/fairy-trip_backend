@@ -11,5 +11,5 @@ public interface SleepingBagRepository {
 
     SleepingBag updateSleepingBag(SleepingBag sleepingBag, Long sleepingBagId);
 
-    boolean deleteSleepingBag(Long sleepingBagId);
+    SleepingBag deleteSleepingBag(Long sleepingBagId);
 }

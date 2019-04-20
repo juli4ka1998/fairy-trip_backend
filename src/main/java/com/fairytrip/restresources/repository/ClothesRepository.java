@@ -11,5 +11,5 @@ public interface ClothesRepository {
 
     Clothes updateClothes(Clothes clothes, Long clothesId);
 
-    boolean deleteClothes(Long clothesId);
+    Clothes deleteClothes(Long clothesId);
 }

@@ -11,5 +11,5 @@ public interface DishesRepository {
 
     Dishes updateDishes(Dishes dishes, Long dishesId);
 
-    boolean deleteDishes(Long dishesId);
+    Dishes deleteDishes(Long dishesId);
 }

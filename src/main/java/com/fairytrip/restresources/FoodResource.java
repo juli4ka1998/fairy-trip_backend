@@ -97,12 +97,12 @@ public class FoodResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response delete(@PathParam("foodId") Long foodId) {
         try {
-            if(foodRepository.deleteFood(foodId)) {
+            //if(foodRepository.deleteFood(foodId)) {
                 return crud.options().build();
-            }
-            else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+//            }
+//            else {
+//                return Response.status(Response.Status.BAD_REQUEST).build();
+//            }
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

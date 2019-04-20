@@ -98,12 +98,12 @@ public class BackpackResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response delete(@PathParam("backpackId") Long backpackId) {
         try {
-            if(backpackRepository.deleteBackpack(backpackId)) {
+            //if(backpackRepository.deleteBackpack(backpackId)) {
                 return crud.options().build();
-            }
-            else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+//            }
+//            else {
+//                return Response.status(Response.Status.BAD_REQUEST).build();
+//            }
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

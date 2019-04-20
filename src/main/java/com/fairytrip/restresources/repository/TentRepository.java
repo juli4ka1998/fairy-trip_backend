@@ -11,5 +11,5 @@ public interface TentRepository {
 
     Tent updateTent(Tent tent, Long tentId);
 
-    boolean deleteTent(Long tentId);
+    Tent deleteTent(Long tentId);
 }

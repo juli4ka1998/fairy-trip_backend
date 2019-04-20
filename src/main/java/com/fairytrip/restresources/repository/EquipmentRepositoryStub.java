@@ -24,9 +24,9 @@ public class EquipmentRepositoryStub implements EquipmentRepository {
     }
 
     @Override
-    public boolean deleteEquipment(Long equipmentId) {
+    public Equipment deleteEquipment(Long equipmentId) {
         Equipment equipment = new Equipment();
-        return crud.delete(equipmentId, equipment);
+        return (Equipment) crud.delete(equipmentId, equipment);
     }
 
     public Equipment setEquipmentProperties(Equipment equipment, Equipment updatedEquipment){

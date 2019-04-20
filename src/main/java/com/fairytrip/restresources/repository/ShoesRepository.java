@@ -12,5 +12,7 @@ public interface ShoesRepository {
 
     Shoes updateShoes(Shoes shoes, Long shoesId);
 
-    boolean deleteShoes(Long shoesId);
+    Shoes deleteShoes(Long shoesId);
+
+    List<Shoes> searchShoes(String s);
 }

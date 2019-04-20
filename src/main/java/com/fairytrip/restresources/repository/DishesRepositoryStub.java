@@ -25,9 +25,9 @@ public class DishesRepositoryStub implements DishesRepository {
     }
 
     @Override
-    public boolean deleteDishes(Long dishesId) {
+    public Dishes deleteDishes(Long dishesId) {
         Dishes dishes = new Dishes();
-        return crud.delete(dishesId, dishes);
+        return (Dishes) crud.delete(dishesId, dishes);
     }
 
     public Dishes setDishesProperties(Dishes dishes, Dishes updatedDishes){

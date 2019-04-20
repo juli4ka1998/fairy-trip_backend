@@ -25,15 +25,22 @@ public class ShoesRepositoryStub implements ShoesRepository {
     }
 
     @Override
-    public boolean deleteShoes(Long shoesId) {
+    public Shoes deleteShoes(Long shoesId) {
         Shoes shoes = new Shoes();
-        return crud.delete(shoesId, shoes);
+        return (Shoes) crud.delete(shoesId, shoes);
+    }
+
+    @Override
+    public List<Shoes> searchShoes(String s) {
+        return  crud.read("select s from Shoes s where name like '%" + s + "%'");
+
     }
 
     public Shoes setShoesProperties(Shoes shoes, Shoes updatedShoes){
         updatedShoes.setName(shoes.getName());
         updatedShoes.setCharacteristic(shoes.getCharacteristic());
-        updatedShoes.setImagePath(shoes.getImagePath());
+        if(shoes.getImagePath() != null)
+            updatedShoes.setImagePath(shoes.getImagePath());
         updatedShoes.setPrice(shoes.getPrice());
         updatedShoes.setBrand(shoes.getBrand());
         updatedShoes.setSizes(shoes.getSizes());

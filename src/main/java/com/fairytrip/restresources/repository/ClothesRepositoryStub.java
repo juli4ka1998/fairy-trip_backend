@@ -30,9 +30,9 @@ public class ClothesRepositoryStub implements ClothesRepository {
         return (Clothes) crud.update(clothes, clothesId);
     }
     @Override
-    public boolean deleteClothes(Long clothesId) {
+    public Clothes deleteClothes(Long clothesId) {
         Clothes clothes = new Clothes();
-        return crud.delete(clothesId, clothes);
+        return (Clothes) crud.delete(clothesId, clothes);
     }
 
     public Clothes setClothesProperties(Clothes clothes, Clothes updatedClothes){

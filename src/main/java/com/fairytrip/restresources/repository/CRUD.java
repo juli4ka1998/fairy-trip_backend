@@ -92,7 +92,7 @@ public class CRUD {
         return updatedObject;
     }
 
-    public boolean delete(Long objectId, Object deletedObject) {
+    public Object delete(Long objectId, Object deletedObject) {
 
         SessionFactory factory = null;
         Session session = null;
@@ -117,7 +117,7 @@ public class CRUD {
         }finally {
             session.close();
         }
-        return del;
+        return deletedObject;
     }
 
     public Object check(String s, String login) {

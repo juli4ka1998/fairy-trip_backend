@@ -63,4 +63,5 @@ public class CommodityResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 }

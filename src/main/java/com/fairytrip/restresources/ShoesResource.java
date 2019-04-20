@@ -40,6 +40,16 @@ public class ShoesResource {
         }
     }
     @OPTIONS
+    @Path("search")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response searchShoes(){
+        try {
+            return crud.options().build();
+        }catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @OPTIONS
     @Path("{shoesId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response updateShoes(){
@@ -70,6 +80,28 @@ public class ShoesResource {
     @Context ServletContext servletContext;
 
     @POST
+    @Path("search")
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response searchShoes(@FormDataParam("search") String s) {
+
+        try {
+            List<Shoes> shoes = shoesRepository.searchShoes(s);
+            if (shoes == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }else {
+                return crud.options()
+                        .entity(shoes)
+                        .build();
+            }
+        }catch (Exception e) {
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
+
+    @POST
     @Path("new_shoes")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces({MediaType.APPLICATION_JSON})
@@ -93,6 +125,7 @@ public class ShoesResource {
     }
 
 
+
     @PUT
     @Path("{shoesId}")
     @Consumes({MediaType.MULTIPART_FORM_DATA})
@@ -104,7 +137,8 @@ public class ShoesResource {
         try {
             json.setMediaType(MediaType.APPLICATION_JSON_TYPE);
             Shoes shoes = json.getValueAs(Shoes.class);
-            writeImage(json, uploadedInputStream, fileDetail, shoes);
+            if(fileDetail.getFileName() != null)
+                writeImage(json, uploadedInputStream, fileDetail, shoes);
             shoes = shoesRepository.updateShoes(shoes, shoesId);
             return crud.options()
                     .entity(shoes)
@@ -120,13 +154,17 @@ public class ShoesResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response delete(@PathParam("shoesId") Long shoesId) {
         try {
+            Shoes shoes = shoesRepository.deleteShoes(shoesId);
+            File file = new File("D:/Julia_work/fairy-trip-backend/src/main/webapp" + shoes.getImagePath());
+            file.delete();
+            return crud.options().build();
+//            if(shoesRepository.deleteShoes(shoesId)) {
+//                return crud.options().build();
+//            }
 
-            if(shoesRepository.deleteShoes(shoesId)) {
-                return crud.options().build();
-            }
-            else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+//            else {
+//                return Response.status(Response.Status.BAD_REQUEST).build();
+//            }
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -138,7 +176,6 @@ public class ShoesResource {
         String filePath = "/images/"
                 + fileDetail.getFileName();
         String uploadedFileLocation = "D:/Julia_work/fairy-trip-backend/src/main/webapp" + filePath;
-
 
         crud.writeToFile(uploadedInputStream, uploadedFileLocation);
         shoes.setImagePath(filePath);

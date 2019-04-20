@@ -11,5 +11,5 @@ public interface FoodRepository {
 
     Food updateFood(Food food, Long foodId);
 
-    boolean deleteFood(Long foodId);
+    Food deleteFood(Long foodId);
 }

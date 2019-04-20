@@ -24,9 +24,9 @@ public class TentRepositoryStub implements TentRepository {
     }
 
     @Override
-    public boolean deleteTent(Long tentId) {
+    public Tent deleteTent(Long tentId) {
         Tent tent = new Tent();
-        return crud.delete(tentId, tent);
+        return (Tent) crud.delete(tentId, tent);
     }
 
     public Tent setTentProperties(Tent tent, Tent updatedTent){

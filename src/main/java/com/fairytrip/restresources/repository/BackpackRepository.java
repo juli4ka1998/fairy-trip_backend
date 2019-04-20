@@ -11,5 +11,5 @@ public interface BackpackRepository {
 
     Backpack updateBackpack(Backpack backpack, Long backpackId);
 
-    boolean deleteBackpack(Long backpackId);
+    Backpack deleteBackpack(Long backpackId);
 }

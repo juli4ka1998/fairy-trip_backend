@@ -24,9 +24,9 @@ public class FoodRepositoryStub implements FoodRepository {
     }
 
     @Override
-    public boolean deleteFood(Long foodId) {
+    public Food deleteFood(Long foodId) {
         Food food = new Food();
-        return crud.delete(foodId, food);
+        return (Food) crud.delete(foodId, food);
     }
 
     public Food setFoodProperties(Food food, Food updatedFood){

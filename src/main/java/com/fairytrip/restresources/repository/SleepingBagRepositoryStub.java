@@ -24,9 +24,9 @@ public class SleepingBagRepositoryStub implements SleepingBagRepository {
     }
 
     @Override
-    public boolean deleteSleepingBag(Long sleepingBagId) {
+    public SleepingBag deleteSleepingBag(Long sleepingBagId) {
         SleepingBag sleepingBag = new SleepingBag();
-        return crud.delete(sleepingBagId, sleepingBag);
+        return (SleepingBag) crud.delete(sleepingBagId, sleepingBag);
     }
 
     public SleepingBag setSleepingBagProperties(SleepingBag sleepingBag, SleepingBag updatedSleepingBag){

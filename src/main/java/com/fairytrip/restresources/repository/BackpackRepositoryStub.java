@@ -24,9 +24,9 @@ public class BackpackRepositoryStub implements BackpackRepository {
     }
 
     @Override
-    public boolean deleteBackpack(Long backpackId) {
+    public Backpack deleteBackpack(Long backpackId) {
         Backpack backpack = new Backpack();
-        return crud.delete(backpackId, backpack);
+        return (Backpack) crud.delete(backpackId, backpack);
     }
 
     public Backpack setBackpackProperties(Backpack backpack, Backpack updatedBackpack){

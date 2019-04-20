@@ -11,5 +11,5 @@ public interface EquipmentRepository {
 
     Equipment updateEquipment(Equipment equipment, Long equipmentId);
 
-    boolean deleteEquipment(Long equipmentId);
+    Equipment deleteEquipment(Long equipmentId);
 }
