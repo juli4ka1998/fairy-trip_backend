@@ -2,7 +2,10 @@ package com.fairytrip.restresources.repository;
 
 
 import com.fairytrip.data.entities.Shoes;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class ShoesRepositoryStub implements ShoesRepository {
@@ -36,6 +39,19 @@ public class ShoesRepositoryStub implements ShoesRepository {
 
     }
 
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Shoes shoes){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        shoes.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Shoes shoes) {
+        crud.deleteImage(shoes.getImagePath());
+    }
+
     public Shoes setShoesProperties(Shoes shoes, Shoes updatedShoes){
         updatedShoes.setName(shoes.getName());
         updatedShoes.setCharacteristic(shoes.getCharacteristic());
@@ -48,5 +64,7 @@ public class ShoesRepositoryStub implements ShoesRepository {
         updatedShoes.setSex(shoes.getSex());
         return updatedShoes;
     }
+
+
 
 }

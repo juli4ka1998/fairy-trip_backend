@@ -1,14 +1,10 @@
 package com.fairytrip.restresources.repository;
 
-import com.fairytrip.data.HibernateUtil;
 import com.fairytrip.data.entities.Clothes;
-import com.fairytrip.data.entities.Shoes;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 
 public class ClothesRepositoryStub implements ClothesRepository {
@@ -29,10 +25,30 @@ public class ClothesRepositoryStub implements ClothesRepository {
     public Clothes updateClothes(Clothes clothes,  Long clothesId) {
         return (Clothes) crud.update(clothes, clothesId);
     }
+
     @Override
     public Clothes deleteClothes(Long clothesId) {
         Clothes clothes = new Clothes();
         return (Clothes) crud.delete(clothesId, clothes);
+    }
+
+    @Override
+    public List<Clothes> searchClothes(String s) {
+        return  crud.read("select s from Clothes s where name like '%" + s + "%'");
+
+    }
+
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Clothes clothes){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        clothes.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Clothes clothes) {
+        crud.deleteImage(clothes.getImagePath());
     }
 
     public Clothes setClothesProperties(Clothes clothes, Clothes updatedClothes){

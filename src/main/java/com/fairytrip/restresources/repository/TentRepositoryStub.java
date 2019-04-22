@@ -1,7 +1,10 @@
 package com.fairytrip.restresources.repository;
 
 import com.fairytrip.data.entities.Tent;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class TentRepositoryStub implements TentRepository {
@@ -27,6 +30,24 @@ public class TentRepositoryStub implements TentRepository {
     public Tent deleteTent(Long tentId) {
         Tent tent = new Tent();
         return (Tent) crud.delete(tentId, tent);
+    }
+    @Override
+    public List<Tent> searchTent(String s) {
+        return  crud.read("select s from Tent s where name like '%" + s + "%'");
+
+    }
+
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Tent tent){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        tent.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Tent tent) {
+        crud.deleteImage(tent.getImagePath());
     }
 
     public Tent setTentProperties(Tent tent, Tent updatedTent){

@@ -1,21 +1,21 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Shoes;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.ShoesRepository;
 import com.fairytrip.restresources.repository.ShoesRepositoryStub;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.List;
 
 @Path("shoes")
+@JsonTokenNeeded
 public class ShoesResource {
 
     ShoesRepository shoesRepository = new ShoesRepositoryStub();
@@ -77,7 +77,7 @@ public class ShoesResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @Context ServletContext servletContext;
+//    @Context ServletContext servletContext;
 
     @POST
     @Path("search")
@@ -112,7 +112,7 @@ public class ShoesResource {
         try {
             json.setMediaType(MediaType.APPLICATION_JSON_TYPE);
             Shoes shoes = json.getValueAs(Shoes.class);
-            writeImage(json, uploadedInputStream, fileDetail, shoes);
+            shoesRepository.writeImage(json, uploadedInputStream, fileDetail, shoes);
             shoes = shoesRepository.createShoes(shoes);
             return crud.options()
                     .entity(shoes)
@@ -137,8 +137,9 @@ public class ShoesResource {
         try {
             json.setMediaType(MediaType.APPLICATION_JSON_TYPE);
             Shoes shoes = json.getValueAs(Shoes.class);
-            if(fileDetail.getFileName() != null)
-                writeImage(json, uploadedInputStream, fileDetail, shoes);
+            if(fileDetail.getFileName() != null){
+                shoesRepository.writeImage(json, uploadedInputStream, fileDetail, shoes);
+            }
             shoes = shoesRepository.updateShoes(shoes, shoesId);
             return crud.options()
                     .entity(shoes)
@@ -155,29 +156,12 @@ public class ShoesResource {
     public Response delete(@PathParam("shoesId") Long shoesId) {
         try {
             Shoes shoes = shoesRepository.deleteShoes(shoesId);
-            File file = new File("D:/Julia_work/fairy-trip-backend/src/main/webapp" + shoes.getImagePath());
-            file.delete();
+            shoesRepository.deleteImage(shoes);
             return crud.options().build();
-//            if(shoesRepository.deleteShoes(shoesId)) {
-//                return crud.options().build();
-//            }
-
-//            else {
-//                return Response.status(Response.Status.BAD_REQUEST).build();
-//            }
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream,FormDataContentDisposition fileDetail, Shoes shoes){
-        //D:\Julia_work\fairy-trip-backend\target\fairy-trip\
-        //System.out.println("11111 " + actualPath);
-        String filePath = "/images/"
-                + fileDetail.getFileName();
-        String uploadedFileLocation = "D:/Julia_work/fairy-trip-backend/src/main/webapp" + filePath;
 
-        crud.writeToFile(uploadedInputStream, uploadedFileLocation);
-        shoes.setImagePath(filePath);
-    }
 }

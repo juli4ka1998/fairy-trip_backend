@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("admin")
-@JsonTokenNeeded
+//@JsonTokenNeeded
 public class AdminResource {
     AdminRepository adminRepository = new AdminRepositoryStub();
     CRUD crud = new CRUD();
@@ -55,7 +55,7 @@ public class AdminResource {
     }
 
 
-    @GET
+    @POST
     @Path("check_admin")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
