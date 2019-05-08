@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Equipment;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.EquipmentRepository;
 import com.fairytrip.restresources.repository.EquipmentRepositoryStub;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Path("equipment")
+@JsonTokenNeeded
 public class EquipmentResource {
 
     EquipmentRepository equipmentRepository = new EquipmentRepositoryStub();

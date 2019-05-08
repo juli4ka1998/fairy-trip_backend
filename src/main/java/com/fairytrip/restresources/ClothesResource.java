@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Clothes;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.ClothesRepository;
 import com.fairytrip.restresources.repository.ClothesRepositoryStub;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Path("clothes")
+@JsonTokenNeeded
 public class ClothesResource {
     ClothesRepository clothesRepository = new ClothesRepositoryStub();
     CRUD crud = new CRUD();

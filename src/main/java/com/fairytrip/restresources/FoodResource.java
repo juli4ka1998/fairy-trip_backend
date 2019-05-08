@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Food;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.FoodRepository;
 import com.fairytrip.restresources.repository.FoodRepositoryStub;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Path("food")
+@JsonTokenNeeded
 public class FoodResource {
     FoodRepository foodRepository = new FoodRepositoryStub();
     CRUD crud = new CRUD();

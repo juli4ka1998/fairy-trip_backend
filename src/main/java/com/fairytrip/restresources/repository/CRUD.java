@@ -225,9 +225,10 @@ public class CRUD {
 
     public Response.ResponseBuilder options() {
        return Response.ok()
-              .header("Access-Control-Allow-Origin", "*")
+             // .header("Access-Control-Allow-Origin", "*")
+              .header("Access-Control-Expose-Headers", "*")
               .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS, DELETE")
-              .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
+              .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, privatekey, expirationdate");
     }
 
     public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, String filePath){

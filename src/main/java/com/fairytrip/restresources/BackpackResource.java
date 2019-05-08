@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Backpack;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.BackpackRepository;
 import com.fairytrip.restresources.repository.BackpackRepositoryStub;
 import com.fairytrip.restresources.repository.CRUD;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Path("backpack")
+@JsonTokenNeeded
 public class BackpackResource {
     BackpackRepository backpackRepository = new BackpackRepositoryStub();
     CRUD crud = new CRUD();

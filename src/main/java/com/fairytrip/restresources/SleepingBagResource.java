@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.SleepingBag;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.SleepingBagRepository;
 import com.fairytrip.restresources.repository.SleepingBagRepositoryStub;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Path("sleeping_bag")
+@JsonTokenNeeded
 public class SleepingBagResource {
     SleepingBagRepository sleepingBagRepository = new SleepingBagRepositoryStub();
     CRUD crud = new CRUD();

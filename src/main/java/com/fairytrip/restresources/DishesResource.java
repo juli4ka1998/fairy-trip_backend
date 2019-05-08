@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Dishes;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.DishesRepository;
 import com.fairytrip.restresources.repository.DishesRepositoryStub;
@@ -15,6 +16,7 @@ import java.io.*;
 import java.util.List;
 
 @Path("dishes")
+@JsonTokenNeeded
 public class DishesResource {
 
     DishesRepository dishesRepository = new DishesRepositoryStub();

@@ -1,6 +1,7 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Tent;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.TentRepository;
 import com.fairytrip.restresources.repository.TentRepositoryStub;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Path("tent")
+@JsonTokenNeeded
 public class TentResource {
     TentRepository tentRepository = new TentRepositoryStub();
     CRUD crud = new CRUD();
