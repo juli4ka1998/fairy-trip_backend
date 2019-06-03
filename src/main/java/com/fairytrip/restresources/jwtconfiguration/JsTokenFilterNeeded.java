@@ -21,6 +21,7 @@ import java.io.IOException;
 public class JsTokenFilterNeeded implements ContainerRequestFilter {
 
     private static final String AUTHORIZATION_SERVICE_PATH = "check_admin";
+    private static final String USER_Header = "user";
     private static final String PRIVATE_KEY = "privateKey";
     private JwTokenHelper jwTokenHelper = JwTokenHelper.getInstance();
 
@@ -29,7 +30,9 @@ public class JsTokenFilterNeeded implements ContainerRequestFilter {
         String path = request.getUriInfo().getPath();
         if (path.contains(AUTHORIZATION_SERVICE_PATH))
             return;
-
+        if (request.getHeaderString(USER_Header) != null){
+            return;
+        }
         String privateKeyHeaderValue = request.getHeaderString(PRIVATE_KEY);
         String token = privateKeyHeaderValue.substring("Bearer".length()).trim();
         if (token == null || token.isEmpty())

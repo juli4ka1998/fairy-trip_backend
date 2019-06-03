@@ -56,7 +56,7 @@ public class CORSFilter implements ContainerRequestFilter, ContainerResponseFilt
                     // Whatever other non-standard/safe headers (see list above)
                     // you want the client to be able to send to the server,
                     // put it in this list. And remove the ones you don't want.
-                    "Content-Type, Accept, X-Requested-With, privatekey, expirationdate");
+                    "Content-Type, Accept, X-Requested-With, privatekey, expirationdate, user");
             //response.getHeaders().add("Access-Control-Expose-Headers", "*");
         }
 
