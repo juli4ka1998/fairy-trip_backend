@@ -80,7 +80,6 @@ public class AdminResource {
                 token = JwTokenHelper.getInstance().generatePrivateKey(admin);
                 date = JwTokenHelper.getInstance().getExpirationDate();
                 return crud.options()
-
                         .entity(checkPass)
                         .header("privateKey", "Bearer " + token)
                         .header("expirationDate", date)
