@@ -10,17 +10,17 @@ public class Food extends Commodity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "food_id")
-    private Long foodId;
+    private Long id;
 
     @Column(name = "weight")
     private String weight;
 
-    public Long getFoodId() {
-        return foodId;
+    public Long getId() {
+        return id;
     }
 
-    public void setFoodId(Long shoesId) {
-        this.foodId = foodId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getWeight() {

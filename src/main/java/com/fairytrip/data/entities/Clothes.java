@@ -11,7 +11,7 @@ public class Clothes extends Commodity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "clothes_id")
-    private Long clothesId;
+    private Long id;
 
     @Column(name = "sex")
     private String sex;
@@ -24,12 +24,12 @@ public class Clothes extends Commodity {
     @Column(name = "size")
     private List<String> sizes;
 
-    public Long getClothesId() {
-        return clothesId;
+    public Long getId() {
+        return id;
     }
 
-    public void setClothesId(Long clothesId) {
-        this.clothesId = clothesId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSex() {

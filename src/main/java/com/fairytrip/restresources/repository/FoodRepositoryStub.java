@@ -1,7 +1,10 @@
 package com.fairytrip.restresources.repository;
 
 import com.fairytrip.data.entities.Food;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class FoodRepositoryStub implements FoodRepository {
@@ -24,9 +27,28 @@ public class FoodRepositoryStub implements FoodRepository {
     }
 
     @Override
-    public boolean deleteFood(Long foodId) {
+    public Food deleteFood(Long foodId) {
         Food food = new Food();
-        return crud.delete(foodId, food);
+        return (Food) crud.delete(foodId, food);
+    }
+
+    @Override
+    public List<Food> searchFood(String s) {
+        return  crud.read("select s from Food s where name like '%" + s + "%'");
+
+    }
+
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Food food){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        food.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Food food) {
+        crud.deleteImage(food.getImagePath());
     }
 
     public Food setFoodProperties(Food food, Food updatedFood){

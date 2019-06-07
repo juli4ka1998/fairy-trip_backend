@@ -10,7 +10,7 @@ public class Backpack extends Commodity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "backpack_id")
-    private Long backpackId;
+    private Long id;
 
     @Column(name = "sex")
     private String sex;
@@ -21,12 +21,12 @@ public class Backpack extends Commodity {
     @Column(name = "size")
     private String sizes;
 
-    public Long getBackpackId() {
-        return backpackId;
+    public Long getId() {
+        return id;
     }
 
-    public void setBackpackId(Long backpackId) {
-        this.backpackId = backpackId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSex() {

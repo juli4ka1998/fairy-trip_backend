@@ -14,13 +14,17 @@ public class AdminRepositoryStub implements AdminRepository {
     public boolean checkAdmin(Admin admin) throws IOException, NoSuchAlgorithmException {
         String login = admin.getLogin();
         String pass = admin.getPassword();
+        try {
+            Admin selectedAdmin = (Admin) crud.check("select a from Admin a where a.login=?1", login);
 
-        Admin selectedAdmin = (Admin) crud.check("select a from Admin a where a.login=?1", login);
+            String saltKey= selectedAdmin.getSalt();
+            String correctPass = selectedAdmin.getPassword();
+            HashPass hp = new HashPass();
+            return hp.checkPassword(pass, saltKey, correctPass);
+        }catch (Exception e){
+            return false;
+        }
 
-        String saltKey= selectedAdmin.getSalt();
-        String correctPass = selectedAdmin.getPassword();
-        HashPass hp = new HashPass();
-        return hp.checkPassword(pass, saltKey, correctPass);
     }
 
     @Override

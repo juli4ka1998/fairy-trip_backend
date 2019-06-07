@@ -1,7 +1,10 @@
 package com.fairytrip.restresources.repository;
 
 import com.fairytrip.data.entities.Equipment;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class EquipmentRepositoryStub implements EquipmentRepository {
@@ -24,9 +27,28 @@ public class EquipmentRepositoryStub implements EquipmentRepository {
     }
 
     @Override
-    public boolean deleteEquipment(Long equipmentId) {
+    public Equipment deleteEquipment(Long equipmentId) {
         Equipment equipment = new Equipment();
-        return crud.delete(equipmentId, equipment);
+        return (Equipment) crud.delete(equipmentId, equipment);
+    }
+
+    @Override
+    public List<Equipment> searchEquipment(String s) {
+        return  crud.read("select s from Equipment s where name like '%" + s + "%'");
+
+    }
+
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Equipment equipment){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        equipment.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Equipment equipment) {
+        crud.deleteImage(equipment.getImagePath());
     }
 
     public Equipment setEquipmentProperties(Equipment equipment, Equipment updatedEquipment){

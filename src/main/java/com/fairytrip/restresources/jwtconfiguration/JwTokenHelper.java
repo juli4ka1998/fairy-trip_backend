@@ -10,13 +10,15 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.UriInfo;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class JwTokenHelper {
 
     private static JwTokenHelper jwTokenHelper = null;
-    private static final long EXPIRATION_LIMIT = 30;
+    private static final long EXPIRATION_LIMIT = 2;
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private JwTokenHelper() {
@@ -50,9 +52,14 @@ public class JwTokenHelper {
     }
 
     @NotNull
-    private Date getExpirationDate() {
+    public Date getExpirationDate() {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+0300"));
         long currentTimeMillis = System.currentTimeMillis();
         long expMilliSeconds = TimeUnit.MINUTES.toMillis(EXPIRATION_LIMIT);
+//        Calendar time = Calendar.getInstance();
+//        time.add(Calendar.MILLISECOND, -time.getTimeZone().getOffset(time.getTimeInMillis()));
+//        Date date = time.getTime();
+       // System.out.println(new Date(currentTimeMillis + expMilliSeconds));
         return new Date(currentTimeMillis + expMilliSeconds);
     }
 }

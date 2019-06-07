@@ -1,16 +1,22 @@
 package com.fairytrip.restresources;
 
 import com.fairytrip.data.entities.Food;
+import com.fairytrip.restresources.jwtconfiguration.JsonTokenNeeded;
 import com.fairytrip.restresources.repository.CRUD;
 import com.fairytrip.restresources.repository.FoodRepository;
 import com.fairytrip.restresources.repository.FoodRepositoryStub;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.List;
 
 @Path("food")
+@JsonTokenNeeded
 public class FoodResource {
     FoodRepository foodRepository = new FoodRepositoryStub();
     CRUD crud = new CRUD();
@@ -27,6 +33,16 @@ public class FoodResource {
     @Path("new_food")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response createShoes(){
+        try {
+            return crud.options().build();
+        }catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @OPTIONS
+    @Path("search")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response searchShoes(){
         try {
             return crud.options().build();
         }catch (Exception e) {
@@ -62,26 +78,64 @@ public class FoodResource {
     }
 
     @POST
-    @Path("new_food")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response create(Food food) {
+    @Path("search")
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response searchFood(@FormDataParam("search") String s) {
+
         try {
+            List<Food> food = foodRepository.searchFood(s);
+            if (food == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }else {
+                return crud.options()
+                        .entity(food)
+                        .build();
+            }
+        }catch (Exception e) {
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
+
+    @POST
+    @Path("new_food")
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response create(@FormDataParam("file") InputStream uploadedInputStream,
+                           @FormDataParam("file") FormDataContentDisposition fileDetail,
+                           @FormDataParam("json") FormDataBodyPart json) {
+
+        try {
+            json.setMediaType(MediaType.APPLICATION_JSON_TYPE);
+            Food food = json.getValueAs(Food.class);
+            foodRepository.writeImage(json, uploadedInputStream, fileDetail, food);
             food = foodRepository.createFood(food);
             return crud.options()
                     .entity(food)
                     .build();
+
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+
     }
 
     @PUT
     @Path("{foodId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response update(Food food, @PathParam("foodId") Long foodId) {
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response update(@FormDataParam("file") InputStream uploadedInputStream,
+                           @FormDataParam("file") FormDataContentDisposition fileDetail,
+                           @FormDataParam("json") FormDataBodyPart json,
+                           @PathParam("foodId") Long foodId) {
         try {
+            json.setMediaType(MediaType.APPLICATION_JSON_TYPE);
+            Food food = json.getValueAs(Food.class);
+            if(fileDetail.getFileName() != null){
+                foodRepository.writeImage(json, uploadedInputStream, fileDetail, food);
+            }
             food = foodRepository.updateFood(food, foodId);
             return crud.options()
                     .entity(food)
@@ -97,12 +151,9 @@ public class FoodResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response delete(@PathParam("foodId") Long foodId) {
         try {
-            if(foodRepository.deleteFood(foodId)) {
-                return crud.options().build();
-            }
-            else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+            Food food = foodRepository.deleteFood(foodId);
+            foodRepository.deleteImage(food);
+            return crud.options().build();
         }catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

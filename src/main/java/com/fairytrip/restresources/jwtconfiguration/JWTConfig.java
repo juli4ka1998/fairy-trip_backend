@@ -10,6 +10,7 @@ import java.util.Map;
 public class JWTConfig extends ResourceConfig{
     public JWTConfig() {
         packages("com.fairytrip.restresources.jwtconfiguration");
+        register(new CORSFilter());
         register(JsTokenFilterNeeded.class);
 //        packages("org.glassfish.jersey.media.multipart");
 //        register(MultiPartFeature.class);

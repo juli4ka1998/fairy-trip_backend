@@ -1,8 +1,14 @@
 package com.fairytrip.restresources.repository;
 
 import com.fairytrip.data.entities.Backpack;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class BackpackRepositoryStub implements BackpackRepository {
     CRUD crud = new CRUD();
@@ -24,9 +30,28 @@ public class BackpackRepositoryStub implements BackpackRepository {
     }
 
     @Override
-    public boolean deleteBackpack(Long backpackId) {
+    public Backpack deleteBackpack(Long backpackId) {
         Backpack backpack = new Backpack();
-        return crud.delete(backpackId, backpack);
+        return (Backpack) crud.delete(backpackId, backpack);
+    }
+
+    @Override
+    public List<Backpack> searchBackpack(String s) {
+        return  crud.read("select s from Backpack s where name like '%" + s + "%'");
+
+    }
+
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Backpack backpack){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        backpack.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Backpack backpack) {
+        crud.deleteImage(backpack.getImagePath());
     }
 
     public Backpack setBackpackProperties(Backpack backpack, Backpack updatedBackpack){
@@ -40,4 +65,6 @@ public class BackpackRepositoryStub implements BackpackRepository {
         updatedBackpack.setSex(backpack.getSex());
         return updatedBackpack;
     }
+
+
 }

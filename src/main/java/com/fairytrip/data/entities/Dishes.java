@@ -10,7 +10,7 @@ public class Dishes extends Commodity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "dishes_id")
-    private Long dishesId;
+    private Long id;
 
     @Column(name = "material")
     private String material;
@@ -18,12 +18,12 @@ public class Dishes extends Commodity {
     @Column(name = "size")
     private String size;
 
-    public Long getDishesId() {
-        return dishesId;
+    public Long getId() {
+        return id;
     }
 
-    public void setDishesId(Long dishesId) {
-        this.dishesId = dishesId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getMaterial() {

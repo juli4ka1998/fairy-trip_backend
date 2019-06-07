@@ -2,7 +2,10 @@ package com.fairytrip.restresources.repository;
 
 
 import com.fairytrip.data.entities.Dishes;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class DishesRepositoryStub implements DishesRepository {
@@ -25,9 +28,28 @@ public class DishesRepositoryStub implements DishesRepository {
     }
 
     @Override
-    public boolean deleteDishes(Long dishesId) {
+    public Dishes deleteDishes(Long dishesId) {
         Dishes dishes = new Dishes();
-        return crud.delete(dishesId, dishes);
+        return (Dishes) crud.delete(dishesId, dishes);
+    }
+
+    @Override
+    public List<Dishes> searchDishes(String s) {
+        return  crud.read("select s from Dishes s where name like '%" + s + "%'");
+
+    }
+
+    @Override
+    public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Dishes dishes){
+        String filePath = "/images/"
+                + fileDetail.getFileName();
+        crud.writeImage(json, uploadedInputStream, filePath);
+        dishes.setImagePath(filePath);
+    }
+
+    @Override
+    public void deleteImage(Dishes dishes) {
+        crud.deleteImage(dishes.getImagePath());
     }
 
     public Dishes setDishesProperties(Dishes dishes, Dishes updatedDishes){
