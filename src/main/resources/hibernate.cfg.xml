@@ -9,14 +9,14 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/fairy-trip?serverTimezone=UTC</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/fairy_trip_db?serverTimezone=UTC</property>
         <property name="connection.username">root</property>
         <property name="connection.password">vsevse</property>
 
         <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
-        <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <!--<property name="hibernate.hbm2ddl.auto">update</property>-->
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
@@ -29,6 +29,9 @@
         <mapping class="com.fairytrip.data.entities.Tent" />
         <mapping class="com.fairytrip.data.entities.SleepingBag" />
         <mapping class="com.fairytrip.data.entities.Admin" />
+        <mapping class="com.fairytrip.data.entities.User" />
+        <mapping class="com.fairytrip.data.entities.Basket" />
+        <mapping class="com.fairytrip.data.entities.Order" />
 
     </session-factory>
 

@@ -14,24 +14,24 @@ public class Application {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.getTransaction().begin();
 
-        Shoes shoes = new Shoes();
-        shoes.setMaterial("metal");
-        shoes.setSex("woman");
-        shoes.setBrand("Nike");
-        shoes.setPrice(2000);
-        shoes.setName("Boots");
-        shoes.setImagePath("/img/img.jpg");
-        shoes.setCharacteristic("Very good!");
+//        Shoes shoes = new Shoes();
+//        shoes.setMaterial("metal");
+//        shoes.setSex("woman");
+//        shoes.setBrand("Nike");
+//        shoes.setPrice(2000);
+//        shoes.setName("Boots");
+//        shoes.setImagePath("/img/img.jpg");
+//        shoes.setCharacteristic("Very good!");
+//
+//        List<Integer> sizes = new ArrayList<Integer>();
+//        sizes.add(37);
+//        sizes.add(38);
+//        sizes.add(39);
+//        shoes.setSizes(sizes);
 
-        List<Integer> sizes = new ArrayList<Integer>();
-        sizes.add(37);
-        sizes.add(38);
-        sizes.add(39);
-        shoes.setSizes(sizes);
 
 
-
-        session.save(shoes);
+//        session.save(shoes);
 
         session.getTransaction().commit();
         session.close();
