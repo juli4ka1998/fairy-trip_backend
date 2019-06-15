@@ -1,5 +1,8 @@
 package com.fairytrip.data.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -32,20 +35,23 @@ public class User {
     @Column(name = "number")
     private String number;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday_date")
     private Date birthdayDate;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "registration_date")
     private Date registrationDate;
 
-    @OneToMany(targetEntity = Basket.class, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, targetEntity = Basket.class, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Basket> basket;
 
-    @OneToMany(targetEntity = Order.class, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, targetEntity = Order.class, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Order> orders;
 
     @Column(name = "email", unique = true)
-    private String login;
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -54,12 +60,12 @@ public class User {
     @Column(name = "salt")
     private String salt;
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
