@@ -41,7 +41,7 @@ public class DishesRepositoryStub implements DishesRepository {
 
     @Override
     public void writeImage(FormDataBodyPart json, InputStream uploadedInputStream, FormDataContentDisposition fileDetail, Dishes dishes){
-        String filePath = "/images/"
+        String filePath = "images/"
                 + fileDetail.getFileName();
         crud.writeImage(json, uploadedInputStream, filePath);
         dishes.setImagePath(filePath);

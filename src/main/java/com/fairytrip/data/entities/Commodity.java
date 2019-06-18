@@ -1,7 +1,12 @@
 package com.fairytrip.data.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 @MappedSuperclass
 public abstract class Commodity {
@@ -18,9 +23,14 @@ public abstract class Commodity {
     @Column(name="brand")
     private String brand;
 
-    @Column(name = "characteristic")
+    @Column(name = "characteristic", length = 700)
 
     private String characteristic;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "registration_date")
+    private Date registrationDate;
 
     public String getImagePath() {
         return imagePath;
@@ -60,5 +70,13 @@ public abstract class Commodity {
 
     public void setCharacteristic(String characteristic) {
         this.characteristic = characteristic;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

@@ -235,7 +235,7 @@ public class CRUD {
         try (InputStream input = ShoesRepositoryStub.class.getClassLoader().getResourceAsStream("config.properties")){
             Properties prop = new Properties();
             prop.load(input);
-            String uploadedFileLocation = prop.getProperty("img_location") + filePath;
+            String uploadedFileLocation = filePath;//prop.getProperty("img_location") + filePath;
             try {
                 OutputStream out = new FileOutputStream(new File(
                         uploadedFileLocation));
